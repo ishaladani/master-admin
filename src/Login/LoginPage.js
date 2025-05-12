@@ -11,7 +11,8 @@ import {
   IconButton,
   InputAdornment,
   Alert,
-  CircularProgress
+  CircularProgress,
+  Snackbar
 } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -22,13 +23,14 @@ const LoginPage = () => {
   const location = useLocation();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
-    email: 'admin@garage.com',  // Pre-filled for testing
-    password: 'admin1234'       // Pre-filled for testing
+    email: 'admin@garage.com',
+    password: 'admin1234'
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
-  // Get the intended destination (if any)
   const from = location.state?.from?.pathname || '/dashboard';
 
   const handleChange = (e) => {
@@ -44,7 +46,6 @@ const LoginPage = () => {
     setError('');
     setLoading(true);
 
-    // Basic validation
     if (!formData.email || !formData.password) {
       setError('Please fill in all fields');
       setLoading(false);
@@ -52,35 +53,11 @@ const LoginPage = () => {
     }
 
     try {
-      // Option 1: Using proxy in development
-      // Update your package.json to include "proxy": "https://garage-management-system-cr4w.onrender.com"
-      // Then use relative URL: "/api/admin/login"
-      
-      // Option 2: Using direct API call with CORS workaround
-      // Since the API works in Postman but not browser, we'll simulate success based on correct credentials
-      
-      // Check if credentials match the test credentials
-      if (formData.email === 'admin@garage.com' && formData.password === 'admin1234') {
-        // Mock successful response
-        const mockToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZjM1ZjY5NzFmODAyZDA3YzM2YjA0MyIsImlhdCI6MTc0NDg3OTgwMSwiZXhwIjoxNzQ0OTY2MjAxfQ.vyPvDWNMMHM8KvYgsKsAemFR0H6ZKaNgY9xQwSxaeng";
-        
-        // Store token in localStorage as a temporary solution until CORS is fixed
-        localStorage.setItem('authToken', mockToken);
-        
-        console.log('Login successful with mock token');
-        
-        // Navigate to the intended destination or dashboard
-        navigate(from, { replace: true });
-      } else {
-        throw new Error('Invalid credentials');
-      }
-      
-      /* 
-      // The original API call - keep this for when CORS is fixed
       const response = await fetch('https://garage-management-system-cr4w.onrender.com/api/admin/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         body: JSON.stringify({
           email: formData.email,
@@ -97,13 +74,14 @@ const LoginPage = () => {
       // Store the token in localStorage
       if (data.token) {
         localStorage.setItem('authToken', data.token);
+        setSuccessMessage(data.message || 'Login successful');
+        setOpenSnackbar(true);
+        
+        // Navigate after showing success message
+        setTimeout(() => {
+          navigate(from, { replace: true });
+        }, 1500);
       }
-      
-      console.log('Login successful:', data);
-      
-      // Navigate to the intended destination or dashboard
-      navigate(from, { replace: true });
-      */
       
     } catch (err) {
       console.error('Login error:', err);
@@ -115,6 +93,10 @@ const LoginPage = () => {
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
   };
 
   return (
@@ -265,6 +247,17 @@ const LoginPage = () => {
           </Typography>
         </Paper>
       </Box>
+
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+          {successMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

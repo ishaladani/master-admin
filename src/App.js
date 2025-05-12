@@ -43,7 +43,7 @@ function App() {
             </ProtectedRoute>
           }>
             {/* Nested routes within AppLayout */}
-            <Route index element={<AWAIRDashboard />} />
+            {/* <Route index element={<AWAIRDashboard />} /> */}
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="customers" element={<Customers />} />
             <Route path="invoices" element={<Invoices />} />
