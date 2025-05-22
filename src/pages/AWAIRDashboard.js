@@ -418,7 +418,7 @@ const handleApprove = async (garageId) => {
         </Paper>
 
         {/* Plan Based Approval */}
-        <Typography
+        {/* <Typography
           variant="h6"
           component="h2"
           sx={{ mt: 4, mb: 2, color: "text.primary" }}
@@ -461,7 +461,7 @@ const handleApprove = async (garageId) => {
               </TableRow>
             </TableBody>
           </Table>
-        </TableContainer>
+        </TableContainer> */}
 
         {/* Plan Expiry Tracking */}
         <Typography
@@ -825,48 +825,7 @@ const handleApprove = async (garageId) => {
           </>
         )}
 
-        {/* Garage Activity Logs */}
-        <Typography
-          variant="h4"
-          component="h1"
-          gutterBottom
-          sx={{
-            color: "primary.dark",
-            borderBottom: "2px solid",
-            borderColor: "primary.main",
-            pb: 1,
-            mt: 6,
-            mb: 4,
-          }}
-        >
-          Garage Activity Logs
-        </Typography>
-
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            mb: 3,
-          }}
-        >
-          <TextField
-            placeholder="Search by garage name"
-            variant="outlined"
-            size="small"
-            InputProps={{
-              startAdornment: <SearchIcon color="action" sx={{ mr: 1 }} />,
-            }}
-            sx={{ width: 300 }}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<DownloadIcon />}
-          >
-            Download Logs
-          </Button>
-        </Box>
+   
 
         <Divider sx={{ my: 3 }} />
 

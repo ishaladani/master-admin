@@ -53,7 +53,7 @@ const LoginPage = () => {
     }
 
     try {
-      const response = await fetch('https://garage-management-system-cr4w.onrender.com/api/admin/login', {
+      const response = await fetch('https://garage-management-backend-3vsh.onrender.com/api/admin/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
