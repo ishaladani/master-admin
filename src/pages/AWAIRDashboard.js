@@ -78,7 +78,7 @@ const AWAIRDashboard = () => {
       try {
         const token = localStorage.getItem('token');
         const response = await fetch(
-          'https://garage-management-system-cr4w.onrender.com/api/admin/garages/pending',
+          'https://garage-management-zi5z.onrender.com/api/admin/garages/pending',
           {
             method: 'GET',
             headers: {
@@ -108,7 +108,7 @@ const handleApprove = async (garageId) => {
     try {
       const token = localStorage.getItem('token');
       const response = await fetch(
-        `https://garage-management-system-cr4w.onrender.com/api/admin/garages/approve/${garageId}`,
+        `https://garage-management-zi5z.onrender.com /api/admin/garages/approve/${garageId}`,
         {
           method: 'PUT',
           headers: {
@@ -132,7 +132,7 @@ const handleApprove = async (garageId) => {
     try {
       const token = localStorage.getItem('token');
       const response = await fetch(
-        `https://garage-management-system-cr4w.onrender.com/api/admin/garages/${garageId}/reject`,
+        `https://garage-management-zi5z.onrender.com /api/admin/garages/${garageId}/reject`,
         {
           method: 'POST',
           headers: {
