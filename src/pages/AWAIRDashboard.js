@@ -72,31 +72,30 @@ const AWAIRDashboard = () => {
     const [garages, setGarages] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+   const token = localStorage.getItem("authToken")
+    ? `Bearer ${localStorage.getItem("authToken")}`
+    : "";
 
  useEffect(() => {
     const fetchPendingGarages = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const response = await fetch(
-          'https://garage-management-zi5z.onrender.com/api/admin/garages/pending',
-          {
-            method: 'GET',
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+        const response = await fetch('https://garage-management-zi5z.onrender.com/api/admin/garages/pending', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token,
+                    }
+        });
 
         if (!response.ok) {
-          throw new Error('Failed to fetch data');
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const data = await response.json();
-        setGarages(data.garages || []); // Extract the `garages` array from the response
-        setLoading(false);
-      } catch (err) {
-        setError(err.message);
+        setGarages(data.garages || []); // adjust based on actual structure
+      } catch (error) {
+        console.error('Error fetching pending garages:', error);
+      } finally {
         setLoading(false);
       }
     };
@@ -106,13 +105,12 @@ const AWAIRDashboard = () => {
 
 const handleApprove = async (garageId) => {
     try {
-      const token = localStorage.getItem('token');
       const response = await fetch(
-        `https://garage-management-zi5z.onrender.com /api/admin/garages/approve/${garageId}`,
+        `https://garage-management-zi5z.onrender.com/api/admin/garages/approve/${garageId}`,
         {
           method: 'PUT',
           headers: {
-            'Authorization': `Bearer ${token}`,
+            'Authorization': token,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
