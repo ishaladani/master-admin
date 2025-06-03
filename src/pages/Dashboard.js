@@ -1,380 +1,162 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  Box,
-  CssBaseline,
-  Typography,
-  TextField,
-  Button,
-  Container,
-  IconButton,
+  Grid,
   Card,
   CardContent,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  AppBar,
-  Toolbar,
-  Grid,
-  Paper,
+  CardHeader,
+  Typography,
+  Box,
   Avatar,
+  Stack,
   Divider,
-  useTheme,
-  ThemeProvider,
-  createTheme,
-  InputBase,
-  Switch,
-  FormControlLabel
+  Button,
+  Chip,
 } from '@mui/material';
 import {
-  Dashboard as DashboardIcon,
-  People as PeopleIcon,
-  Receipt as ReceiptIcon,
-  Inventory as InventoryIcon,
-  Assessment as AssessmentIcon,
-  Settings as SettingsIcon,
-  Search as SearchIcon,
-  ArrowUpward as ArrowUpwardIcon
-} from '@mui/icons-material';
-import { styled } from '@mui/material/styles';
+  TrendingUp,
+  Users,
+  CreditCard,
+  AlertTriangle,
+} from 'lucide-react';
 
-// Create custom themed components
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: 20,
-  backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.05)',
-  '&:hover': {
-    backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.25)' : 'rgba(0, 0, 0, 0.08)',
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '300px',
-  [theme.breakpoints.down('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto',
-  },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  width: '100%',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-  },
-}));
-
-const StyledCard = styled(Card)(({ theme }) => ({
-  height: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  transition: 'transform 0.3s, box-shadow 0.3s',
-  '&:hover': {
-    transform: 'translateY(-5px)',
-    boxShadow: theme.shadows[8],
-  },
-}));
-
-// Dashboard component
 const Dashboard = () => {
-  const [darkMode, setDarkMode] = useState(false);
-
-  // Create theme
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode: darkMode ? 'dark' : 'light',
-          primary: {
-            main: '#1a237e',
-          },
-          secondary: {
-            main: '#283593',
-          },
-          background: {
-            default: darkMode ? '#121212' : '#f0f2f5',
-            paper: darkMode ? '#1e1e1e' : '#ffffff',
-          },
-        },
-        components: {
-          MuiDrawer: {
-            styleOverrides: {
-              paper: {
-                backgroundColor: darkMode ? '#121212' : '#1a237e',
-                color: 'white',
-              },
-            },
-          },
-        },
-      }),
-    [darkMode],
-  );
-
-  const drawerWidth = 250;
-  const navItems = [
-    { text: 'Dashboard', icon: <DashboardIcon />, active: true },
-    { text: 'Customers', icon: <PeopleIcon />, active: false },
-    { text: 'Invoices', icon: <ReceiptIcon />, active: false },
-    { text: 'Products', icon: <InventoryIcon />, active: false },
-    { text: 'Reports', icon: <AssessmentIcon />, active: false },
-    { text: 'Settings', icon: <SettingsIcon />, active: false },
+  const dashboardStats = [
+    {
+      title: 'Total Garages',
+      value: '156',
+      trend: '+12%',
+      desc: 'vs last month',
+      color: '#1976d2',
+      icon: Users,
+    },
+    {
+      title: 'Active Subscriptions',
+      value: '142',
+      trend: '+8%',
+      desc: 'vs last month',
+      color: '#2e7d32',
+      icon: TrendingUp,
+    },
+    {
+      title: 'Monthly Revenue',
+      value: '₹2,45,000',
+      trend: '+15%',
+      desc: 'vs last month',
+      color: '#ed6c02',
+      icon: CreditCard,
+    },
+    {
+      title: 'Pending Approvals',
+      value: '8',
+      trend: '-3%',
+      desc: 'vs last week',
+      color: '#d32f2f',
+      icon: AlertTriangle,
+    },
   ];
 
-  const handleThemeChange = () => {
-    setDarkMode(!darkMode);
-  };
+  const recentActivity = [
+    { id: 1, garage: 'AutoCare Plus', action: 'Subscription Renewed', time: '2 hours ago', status: 'success' },
+    { id: 2, garage: 'Quick Fix Motors', action: 'Payment Received', time: '4 hours ago', status: 'success' },
+    { id: 3, garage: 'Elite Auto Service', action: 'Pending Approval', time: '6 hours ago', status: 'warning' },
+    { id: 4, garage: 'Pro Mechanics', action: 'Account Created', time: '1 day ago', status: 'info' },
+  ];
 
   return (
-    <ThemeProvider theme={theme}>
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        
-        {/* Main content */}
-        <Box
-          component="main"
-          sx={{ 
-            flexGrow: 1, 
-            p: 3,
-            overflow: 'auto',
-            backgroundColor: theme.palette.background.default,
-            minHeight: '100vh'
-          }}
-        >
-          {/* Header */}
-          <AppBar 
-            position="static" 
-            color="transparent" 
-            elevation={0}
-            sx={{ 
-              backgroundColor: theme.palette.background.paper,
-              borderRadius: 2,
-              mb: 3
-            }}
-          >
-            <Toolbar>
-              <Search>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                  placeholder="Search…"
-                  inputProps={{ 'aria-label': 'search' }}
-                />
-              </Search>
-              <Box sx={{ flexGrow: 1 }} />
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Avatar alt="John Doe" src="/static/images/avatar/1.jpg" />
-                <Typography variant="body1" sx={{ ml: 1 }}>
-                  John Doe
-                </Typography>
-              </Box>
-            </Toolbar>
-          </AppBar>
-
-          {/* Dashboard stats */}
-          <Grid container spacing={3} sx={{ mb: 3 }}>
-            <Grid item xs={12} sm={6} md={4}>
-              <StyledCard elevation={3}>
-                <CardContent>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Total Revenue
-                  </Typography>
-                  <Typography variant="h4" component="div" color="primary" sx={{ fontWeight: 'bold' }}>
-                    $45,678
-                  </Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                    <ArrowUpwardIcon color="success" fontSize="small" />
-                    <Typography variant="body2" color="success.main" sx={{ ml: 0.5 }}>
-                      +12.5% from last month
+    <Box>
+      <Typography variant="h4" gutterBottom fontWeight="bold">
+        Dashboard Overview
+      </Typography>
+      
+      <Grid container spacing={3}>
+        {/* Stats Cards */}
+        {dashboardStats.map((stat, index) => (
+          <Grid item xs={12} sm={6} md={3} key={index}>
+            <Card sx={{ boxShadow: 3, height: '100%' }}>
+              <CardContent>
+                <Box display="flex" justifyContent="space-between" alignItems="center">
+                  <Box>
+                    <Typography variant="body2" color="textSecondary">
+                      {stat.title}
                     </Typography>
-                  </Box>
-                </CardContent>
-              </StyledCard>
-            </Grid>
-            
-            <Grid item xs={12} sm={6} md={4}>
-              <StyledCard elevation={3}>
-                <CardContent>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Active Customers
-                  </Typography>
-                  <Typography variant="h4" component="div" color="primary" sx={{ fontWeight: 'bold' }}>
-                    1,234
-                  </Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                    <ArrowUpwardIcon color="success" fontSize="small" />
-                    <Typography variant="body2" color="success.main" sx={{ ml: 0.5 }}>
-                      +5.2% from last month
+                    <Typography variant="h5" fontWeight="bold">
+                      {stat.value}
                     </Typography>
+                    <Stack direction="row" spacing={1} mt={1}>
+                      <Typography variant="caption" color="success.main">
+                        {stat.trend}
+                      </Typography>
+                      <Typography variant="caption" color="textSecondary">
+                        {stat.desc}
+                      </Typography>
+                    </Stack>
                   </Box>
-                </CardContent>
-              </StyledCard>
-            </Grid>
-            
-            <Grid item xs={12} sm={6} md={4}>
-              <StyledCard elevation={3}>
-                <CardContent>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Pending Invoices
-                  </Typography>
-                  <Typography variant="h4" component="div" color="primary" sx={{ fontWeight: 'bold' }}>
-                    23
-                  </Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                    <ArrowUpwardIcon color="success" fontSize="small" sx={{ transform: 'rotate(180deg)' }} />
-                    <Typography variant="body2" color="success.main" sx={{ ml: 0.5 }}>
-                      -2.1% from last month
-                    </Typography>
-                  </Box>
-                </CardContent>
-              </StyledCard>
-            </Grid>
+                  <Avatar sx={{ bgcolor: stat.color, width: 50, height: 50 }}>
+                    <stat.icon size={24} />
+                  </Avatar>
+                </Box>
+              </CardContent>
+            </Card>
           </Grid>
+        ))}
 
-          {/* Revenue chart */}
-          <Paper 
-            elevation={3} 
-            sx={{ 
-              p: 3, 
-              mb: 3, 
-              borderRadius: 2 
-            }}
-          >
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-              <Typography variant="h6">Revenue Overview</Typography>
-              <Box>
-                <Button 
-                  variant="contained" 
-                  size="small" 
-                  sx={{ 
-                    mr: 1, 
-                    bgcolor: theme.palette.primary.main,
-                    '&:hover': {
-                      bgcolor: theme.palette.primary.dark
-                    }
-                  }}
-                >
-                  Daily
-                </Button>
-                <Button 
-                  variant="outlined" 
-                  size="small" 
-                  sx={{ 
-                    mr: 1,
-                    color: theme.palette.mode === 'dark' ? 'white' : theme.palette.primary.main,
-                    borderColor: theme.palette.mode === 'dark' ? 'white' : theme.palette.primary.main
-                  }}
-                >
-                  Weekly
-                </Button>
-                <Button 
-                  variant="outlined" 
-                  size="small"
-                  sx={{ 
-                    color: theme.palette.mode === 'dark' ? 'white' : theme.palette.primary.main,
-                    borderColor: theme.palette.mode === 'dark' ? 'white' : theme.palette.primary.main
-                  }}
-                >
-                  Monthly
-                </Button>
-              </Box>
+        {/* Recent Activity */}
+        <Grid item xs={12} lg={8}>
+          <Card sx={{ p: 2 }}>
+            <CardHeader title="Recent Activity" />
+            <Divider />
+            <Box sx={{ mt: 2 }}>
+              {recentActivity.map((activity) => (
+                <Box key={activity.id} sx={{ mb: 2, p: 2, border: '1px solid #eee', borderRadius: 2 }}>
+                  <Box display="flex" justifyContent="space-between" alignItems="center">
+                    <Box>
+                      <Typography fontWeight="bold">{activity.garage}</Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        {activity.action}
+                      </Typography>
+                    </Box>
+                    <Box textAlign="right">
+                      <Typography variant="caption" color="textSecondary">
+                        {activity.time}
+                      </Typography>
+                      <Box mt={0.5}>
+                        <Chip
+                          label={activity.status}
+                          color={activity.status === 'success' ? 'success' : activity.status === 'warning' ? 'warning' : 'info'}
+                          size="small"
+                        />
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
+              ))}
             </Box>
-            <Box 
-              sx={{ 
-                height: 300, 
-                backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.03)',
-                borderRadius: 1,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              <Typography variant="body2" color="text.secondary">
-                Chart would go here
-              </Typography>
-            </Box>
-          </Paper>
+          </Card>
+        </Grid>
 
-          {/* Recent activity */}
-          <Paper 
-            elevation={3} 
-            sx={{ 
-              p: 3, 
-              borderRadius: 2 
-            }}
-          >
-            <Typography variant="h6" sx={{ mb: 2 }}>Recent Activity</Typography>
-            
-            <Box sx={{ '& > :not(:last-child)': { mb: 2, pb: 2, borderBottom: 1, borderColor: 'divider' } }}>
-              <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
-                <Avatar 
-                  sx={{ 
-                    mr: 2, 
-                    bgcolor: 'primary.light',
-                    color: theme.palette.mode === 'dark' ? 'black' : 'white'
-                  }}
-                >
-                  💰
-                </Avatar>
-                <Box>
-                  <Typography variant="subtitle1">New Invoice Generated</Typography>
-                  <Typography variant="body2" color="text.secondary">Invoice #1234 for $1,200</Typography>
-                  <Typography variant="caption" color="text.secondary">2 hours ago</Typography>
-                </Box>
-              </Box>
-              
-              <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
-                <Avatar 
-                  sx={{ 
-                    mr: 2, 
-                    bgcolor: 'primary.light',
-                    color: theme.palette.mode === 'dark' ? 'black' : 'white'
-                  }}
-                >
-                  👤
-                </Avatar>
-                <Box>
-                  <Typography variant="subtitle1">New Customer Registered</Typography>
-                  <Typography variant="body2" color="text.secondary">John Smith from Tech Corp</Typography>
-                  <Typography variant="caption" color="text.secondary">5 hours ago</Typography>
-                </Box>
-              </Box>
-              
-              <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
-                <Avatar 
-                  sx={{ 
-                    mr: 2, 
-                    bgcolor: 'primary.light',
-                    color: theme.palette.mode === 'dark' ? 'black' : 'white'
-                  }}
-                >
-                  ✅
-                </Avatar>
-                <Box>
-                  <Typography variant="subtitle1">Payment Received</Typography>
-                  <Typography variant="body2" color="text.secondary">Payment of $800 for Invoice #1230</Typography>
-                  <Typography variant="caption" color="text.secondary">1 day ago</Typography>
-                </Box>
-              </Box>
-            </Box>
-          </Paper>
-        </Box>
-      </Box>
-    </ThemeProvider>
+        {/* Quick Actions */}
+        <Grid item xs={12} lg={4}>
+          <Card sx={{ p: 2 }}>
+            <CardHeader title="Quick Actions" />
+            <Divider />
+            <Stack spacing={2} sx={{ mt: 2 }}>
+              <Button variant="contained" fullWidth>
+                Add New Garage
+              </Button>
+              <Button variant="outlined" fullWidth>
+                Generate Report
+              </Button>
+              <Button variant="outlined" fullWidth>
+                Send Notifications
+              </Button>
+              <Button variant="outlined" fullWidth>
+                View Analytics
+              </Button>
+            </Stack>
+          </Card>
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
 
