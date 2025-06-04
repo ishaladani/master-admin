@@ -39,7 +39,7 @@ const Layout = ({ children }) => {
   const menuItems = [
     { id: 'all-garages', label: 'All Garages', icon: Users, path: '/all-garages' },
     { id: 'pending-requests', label: 'Pending Requests', icon: AlertTriangle, path: '/pending-requests' },
-    { id: 'payment-history', label: 'Payment History', icon: CreditCard, path: '/payment-history' },
+    // { id: 'payment-history', label: 'Payment History', icon: CreditCard, path: '/payment-history' },
     { id: 'Garage-Expiry-Tracker', label: 'Garage Expiry Tracker', icon: TrendingUp, path: '/Garage-Expiry-Tracker' },
     { id: 'update-plan', label: 'Update Plan', icon: Bell, path: '/update-plan' },
   ];
